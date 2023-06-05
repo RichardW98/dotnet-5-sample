@@ -1,0 +1,35 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    creationTimestamp: null
+    labels:
+        move2kube.konveyor.io/service: dotnet5react
+    name: dotnet5react
+spec:
+    replicas: {{ index .Values "common" "replicas" }}
+    selector:
+        matchLabels:
+            move2kube.konveyor.io/service: dotnet5react
+    strategy: {}
+    template:
+        metadata:
+            creationTimestamp: null
+            labels:
+                move2kube.konveyor.io/service: dotnet5react
+            name: dotnet5react
+        spec:
+            containers:
+                - image: quay.com/parodos/dotnet5react:latest
+                  imagePullPolicy: Always
+                  name: dotnet5react
+                  ports:
+                    - containerPort: 5001
+                    - containerPort: 5000
+                  resources: {}
+            restartPolicy: Always
+            securityContext: {}
+status: {}
+
+...

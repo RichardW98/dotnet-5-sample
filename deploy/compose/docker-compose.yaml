@@ -1,0 +1,34 @@
+version: "3.5"
+services:
+  dotnet5angular:
+    container_name: dotnet5angular
+    image: quay.com/parodos/dotnet5angular:latest
+    ports:
+      - target: 5001
+        published: 8080
+      - target: 5000
+        published: 8081
+  dotnet5react:
+    container_name: dotnet5react
+    image: quay.com/parodos/dotnet5react:latest
+    ports:
+      - target: 5001
+        published: 8086
+      - target: 5000
+        published: 8087
+  dotnet5react-redux:
+    container_name: dotnet5react-redux
+    image: quay.com/parodos/dotnet5react-redux:latest
+    ports:
+      - target: 5001
+        published: 8084
+      - target: 5000
+        published: 8085
+  dotnet5webapp:
+    container_name: dotnet5webapp
+    image: quay.com/parodos/dotnet5webapp:latest
+    ports:
+      - target: 5001
+        published: 8082
+      - target: 5000
+        published: 8083

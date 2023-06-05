@@ -1,0 +1,297 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: workflowid--b389c1c8-b1ef-44fd-86a0-bb4788ea5dc0-template
+  generatename: ""
+  namespace: ""
+  selflink: ""
+  uid: ""
+  resourceversion: ""
+  generation: 0
+  creationtimestamp: "0001-01-01T00:00:00Z"
+  deletiontimestamp: null
+  deletiongraceperiodseconds: null
+  labels: {}
+  annotations: {}
+  ownerreferences: []
+  finalizers: []
+  clustername: ""
+  managedfields: []
+objects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5angular
+      name: dotnet5angular
+    spec:
+      ports:
+        - name: port-5001
+          port: 5001
+          targetPort: 5001
+        - name: port-5000
+          port: 5000
+          targetPort: 5000
+      selector:
+        move2kube.konveyor.io/service: dotnet5angular
+      type: ClusterIP
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5react
+      name: dotnet5react
+    spec:
+      replicas: ${{COMMON_REPLICAS}}
+      selector:
+        matchLabels:
+          move2kube.konveyor.io/service: dotnet5react
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            move2kube.konveyor.io/service: dotnet5react
+          name: dotnet5react
+        spec:
+          containers:
+            - image: quay.com/parodos/dotnet5react:latest
+              imagePullPolicy: Always
+              name: dotnet5react
+              ports:
+                - containerPort: 5001
+                - containerPort: 5000
+              resources: {}
+          restartPolicy: Always
+          securityContext: {}
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5react-redux
+      name: dotnet5react-redux
+    spec:
+      replicas: ${{COMMON_REPLICAS}}
+      selector:
+        matchLabels:
+          move2kube.konveyor.io/service: dotnet5react-redux
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            move2kube.konveyor.io/service: dotnet5react-redux
+          name: dotnet5react-redux
+        spec:
+          containers:
+            - image: quay.com/parodos/dotnet5react-redux:latest
+              imagePullPolicy: Always
+              name: dotnet5react-redux
+              ports:
+                - containerPort: 5001
+                - containerPort: 5000
+              resources: {}
+          restartPolicy: Always
+          securityContext: {}
+    status: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5react-redux
+      name: dotnet5react-redux
+    spec:
+      ports:
+        - name: port-5001
+          port: 5001
+          targetPort: 5001
+        - name: port-5000
+          port: 5000
+          targetPort: 5000
+      selector:
+        move2kube.konveyor.io/service: dotnet5react-redux
+      type: ClusterIP
+    status:
+      loadBalancer: {}
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: workflowid--b389c1c8-b1ef-44fd-86a0-bb4788ea5dc0
+      name: workflowid--b389c1c8-b1ef-44fd-86a0-bb4788ea5dc0
+    spec:
+      rules:
+        - host: localhost
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: dotnet5webapp
+                    port:
+                      name: port-5001
+                path: /dotnet5webapp
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5webapp
+                    port:
+                      name: port-5000
+                path: /dotnet5webapp
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5react-redux
+                    port:
+                      name: port-5001
+                path: /dotnet5react-redux
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5react-redux
+                    port:
+                      name: port-5000
+                path: /dotnet5react-redux
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5react
+                    port:
+                      name: port-5001
+                path: /dotnet5react
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5react
+                    port:
+                      name: port-5000
+                path: /dotnet5react
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5angular
+                    port:
+                      name: port-5001
+                path: /dotnet5angular
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: dotnet5angular
+                    port:
+                      name: port-5000
+                path: /dotnet5angular
+                pathType: Prefix
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5angular
+      name: dotnet5angular
+    spec:
+      replicas: ${{COMMON_REPLICAS}}
+      selector:
+        matchLabels:
+          move2kube.konveyor.io/service: dotnet5angular
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            move2kube.konveyor.io/service: dotnet5angular
+          name: dotnet5angular
+        spec:
+          containers:
+            - image: quay.com/parodos/dotnet5angular:latest
+              imagePullPolicy: Always
+              name: dotnet5angular
+              ports:
+                - containerPort: 5001
+                - containerPort: 5000
+              resources: {}
+          restartPolicy: Always
+          securityContext: {}
+    status: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5react
+      name: dotnet5react
+    spec:
+      ports:
+        - name: port-5001
+          port: 5001
+          targetPort: 5001
+        - name: port-5000
+          port: 5000
+          targetPort: 5000
+      selector:
+        move2kube.konveyor.io/service: dotnet5react
+      type: ClusterIP
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5webapp
+      name: dotnet5webapp
+    spec:
+      replicas: ${{COMMON_REPLICAS}}
+      selector:
+        matchLabels:
+          move2kube.konveyor.io/service: dotnet5webapp
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            move2kube.konveyor.io/service: dotnet5webapp
+          name: dotnet5webapp
+        spec:
+          containers:
+            - image: quay.com/parodos/dotnet5webapp:latest
+              imagePullPolicy: Always
+              name: dotnet5webapp
+              ports:
+                - containerPort: 5001
+                - containerPort: 5000
+              resources: {}
+          restartPolicy: Always
+          securityContext: {}
+    status: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        move2kube.konveyor.io/service: dotnet5webapp
+      name: dotnet5webapp
+    spec:
+      ports:
+        - name: port-5001
+          port: 5001
+          targetPort: 5001
+        - name: port-5000
+          port: 5000
+          targetPort: 5000
+      selector:
+        move2kube.konveyor.io/service: dotnet5webapp
+      type: ClusterIP
+    status:
+      loadBalancer: {}
+parameters:
+  - name: COMMON_REPLICAS
+    value: "2"

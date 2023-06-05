@@ -1,0 +1,35 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    creationTimestamp: null
+    labels:
+        move2kube.konveyor.io/service: dotnet5react-redux
+    name: dotnet5react-redux
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            move2kube.konveyor.io/service: dotnet5react-redux
+    strategy: {}
+    template:
+        metadata:
+            creationTimestamp: null
+            labels:
+                move2kube.konveyor.io/service: dotnet5react-redux
+            name: dotnet5react-redux
+        spec:
+            containers:
+                - image: quay.com/parodos/dotnet5react-redux:latest
+                  imagePullPolicy: Always
+                  name: dotnet5react-redux
+                  ports:
+                    - containerPort: 5001
+                    - containerPort: 5000
+                  resources: {}
+            restartPolicy: Always
+            securityContext: {}
+status: {}
+
+...

@@ -1,0 +1,10 @@
+resources:
+  - workflowid--b389c1c8-b1ef-44fd-86a0-bb4788ea5dc0-ingress.yaml
+  - dotnet5angular-service.yaml
+  - dotnet5react-deployment.yaml
+  - dotnet5react-redux-deployment.yaml
+  - dotnet5react-redux-service.yaml
+  - dotnet5angular-deployment.yaml
+  - dotnet5react-service.yaml
+  - dotnet5webapp-deployment.yaml
+  - dotnet5webapp-service.yaml

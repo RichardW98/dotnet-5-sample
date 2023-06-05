@@ -1,0 +1,27 @@
+patches:
+  - path: apps-v1-deployment-dotnet5react-redux.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dotnet5react-redux
+  - path: apps-v1-deployment-dotnet5angular.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dotnet5angular
+  - path: apps-v1-deployment-dotnet5webapp.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dotnet5webapp
+  - path: apps-v1-deployment-dotnet5react.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dotnet5react
+resources:
+  - ../../base
